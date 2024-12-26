@@ -5,62 +5,64 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.edu.student_management_system.model.Student;
-import pl.edu.student_management_system.service.StudentService;
+import pl.edu.student_management_system.service.StudentManager;
 
 @Controller
-@RequestMapping("/") // Ustawienie głównej ścieżki
+@RequestMapping("/")
 public class StudentController {
 
-    private final StudentService studentService;
+    private final StudentManager studentManager;
 
     @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    public StudentController(StudentManager studentManager) {
+        this.studentManager = studentManager;
     }
 
-    // Wyświetlenie listy studentów
     @GetMapping
     public String getAllStudents(Model model) {
-        model.addAttribute("students", studentService.getAllStudents());
-        return "list"; // Ścieżka do list.html w folderze templates
+        model.addAttribute("students", studentManager.getAllStudents());
+        return "list";
     }
 
-    // Wyświetlenie formularza dodawania studenta
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("student", new Student());
-        return "add"; // Ścieżka do add.html w folderze templates
+        return "add";
     }
 
-    // Dodanie nowego studenta
     @PostMapping("/add")
     public String addStudent(@ModelAttribute Student student) {
-        studentService.addStudent(student);
-        return "redirect:/"; // Powrót na stronę główną
+        studentManager.addStudent(student);
+        return "redirect:/";
     }
 
-    // Usuwanie studenta
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable Long id) {
-        studentService.deleteStudent(id);
-        return "redirect:/"; // Powrót na stronę główną
+        studentManager.deleteStudent(id);
+        return "redirect:/";
     }
 
-    // Wyświetlenie formularza edycji studenta
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        model.addAttribute("student", studentService.getAllStudents()
+        model.addAttribute("student", studentManager.getAllStudents()
                 .stream()
                 .filter(s -> s.getId().equals(id))
                 .findFirst()
                 .orElse(null));
-        return "edit"; // Ścieżka do edit.html w folderze templates
+        return "edit";
     }
 
-    // Aktualizacja danych studenta
     @PostMapping("/edit/{id}")
     public String updateStudent(@PathVariable Long id, @ModelAttribute Student student) {
-        studentService.updateStudent(id, student);
-        return "redirect:/"; // Powrót na stronę główną
+        studentManager.updateStudent(id, student);
+        return "redirect:/";
+    }
+
+    @GetMapping("/average")
+    public String calculateAverage(Model model) {
+        double average = studentManager.calculateAverageGrade();
+        model.addAttribute("students", studentManager.getAllStudents());
+        model.addAttribute("average", average);
+        return "list";
     }
 }

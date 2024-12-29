@@ -41,7 +41,7 @@ This repository contains a **Student Management System**, a web-based applicatio
    ```
 
 4. **Access the application:**
-   Open your web browser and go to `http://localhost:8080`.
+   Open your web browser and go to `http://localhost:8082`.
 
 ## Usage
 

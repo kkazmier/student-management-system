@@ -9,16 +9,17 @@ This repository contains a **Student Management System**, a web-based applicatio
 - Delete student records.
 - Calculate the average grade of all students.
 
-## Technology Stack
-- **Backend**: Spring Boot
-- **Frontend**: Thymeleaf
-- **Database**: SQLite
-- **Build Tool**: Maven
+## Technologies
+
+- **Spring Boot**: Framework for building Java applications.
+- **Thymeleaf**: Template engine for rendering views.
+- **H2 Database**: Lightweight in-memory database.
+- **Spring Data JPA**: Abstraction for data access.
+- **Lombok**: Tool for reducing boilerplate code in Java.
 
 ## Prerequisites
 - Java Development Kit (JDK) 17 or higher
 - Maven
-- SQLite Studio (optional for database management)
 - An IDE such as IntelliJ IDEA Ultimate
 
 ## Installation
